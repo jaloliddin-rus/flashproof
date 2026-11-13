@@ -36,6 +36,7 @@ The Full test takes a while: about 2 hours for a slow 64 GB drive. FlashProof sh
 ## Requirements
 
 - Windows 10 (22H2) or Windows 11, on an x64 or ARM64 PC.
+- So far it has been tested on Windows 11 on an x64 PC only. Windows 10 and ARM64 PCs are untested.
 - No administrator rights. Nothing to install.
 
 ## How to use it
@@ -51,6 +52,8 @@ The Full test takes a while: about 2 hours for a slow 64 GB drive. FlashProof sh
 5. Read the result. "Copy report" or "Save report…" gives you a plain-text report to keep or share.
 
 Because the app is new, Windows may show "Windows protected your PC" when you start it. If you downloaded it from this project's Releases page, click "More info", then "Run anyway".
+
+FlashProof isn't digitally signed yet. If your PC has Smart App Control turned on (Windows Security > App & browser control), Windows blocks the app and has no "Run anyway" for it.
 
 **Checking your download (optional).** Each release has a `SHA256SUMS.txt` file. In PowerShell, in the folder where you saved the exe, run `Get-FileHash .\FlashProof-win-x64.exe`. The long code it prints should match the one in `SHA256SUMS.txt` (capital and small letters don't matter).
 
