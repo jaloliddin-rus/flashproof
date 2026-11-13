@@ -9,6 +9,10 @@ FlashProof is a free Windows app that tells you whether a USB flash drive, SD ca
 
 It answers in plain words, with a next step for every result. What each result means: [docs/results.md](docs/results.md).
 
+![FlashProof's first screen: a list of drives and cards, each with its size, drive letter and status, and Inspect and Full test buttons](docs/images/home.png)
+
+*The screenshots on this page show sample drives.*
+
 ## What it does
 
 FlashProof has two modes.
@@ -17,14 +21,26 @@ FlashProof has two modes.
 
 Inspect isn't a health check: a fake or failing drive can pass it. Only the Full test shows whether the drive stores data correctly.
 
+![Inspect: "No problems found in these checks", with the drive's size, partitions, write protection and recent disk errors](docs/images/inspect.png)
+
 **The Full test** fills the drive's free space with test data, reads all of it back, and checks every byte. It gives two answers:
 
 - **Storage:** did the space that was tested work?
 - **Capacity:** is the drive's size real? This needs about 95% of the drive to be tested, so it's checked only on a drive that's empty or nearly empty.
 
+A drive that passed:
+
+![A Full test result: "Passed: capacity confirmed", with the tested size, the time taken, write and read speeds, and a speed chart](docs/images/result-pass.png)
+
+A fake drive that claims 2 TB but holds only about 31 GB:
+
+![A Full test result: "Fake capacity. Only about 31.4 GB of the claimed 2.0 TB actually stores data."](docs/images/result-fake.png)
+
 Your files on the drive are kept: the test writes only to the free space, in a folder of its own, and deletes its test files when it passes. **But if the drive is fake, writing to it can damage the files already on it, so copy them somewhere else first.** For a new drive or card, run Inspect, then the Full test.
 
 The Full test takes a while: about 2 hours for a slow 64 GB drive. FlashProof shows the time left and keeps the computer awake meanwhile.
+
+![A Full test in progress: step 1 of 2, writing test data, 24.7 GB of 61.4 GB, the speed and the time left, a Stop button and a live speed chart](docs/images/test.png)
 
 ## What it doesn't do
 
@@ -89,7 +105,7 @@ dotnet test
 pwsh -File publish.ps1
 ```
 
-`publish.ps1` makes both release exes, the license, the notices and `SHA256SUMS.txt` in `artifacts\release`.
+`publish.ps1` makes both release exes, the license, the notices and `SHA256SUMS.txt` in `artifacts\release`. `dotnet run -c Release tools/make-screenshots.cs` redraws this page's screenshots.
 
 | Project | Purpose |
 |---|---|
