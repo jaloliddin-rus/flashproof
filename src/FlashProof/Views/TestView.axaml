@@ -1,0 +1,70 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:app="using:FlashProof"
+             xmlns:vm="using:FlashProof.ViewModels"
+             xmlns:views="using:FlashProof.Views"
+             x:Class="FlashProof.Views.TestView"
+             x:DataType="vm:TestViewModel">
+  <ScrollViewer>
+    <StackPanel Classes="page">
+      <TextBlock Classes="h1" Text="{Binding Title}" />
+
+      <StackPanel Spacing="8" IsVisible="{Binding IsRunning}">
+        <TextBlock Classes="h2" Text="{Binding PhaseText}" />
+        <ProgressBar Minimum="0" Maximum="1" Value="{Binding Fraction}" Height="10" />
+        <Grid ColumnDefinitions="*,Auto">
+          <TextBlock Text="{Binding DoneText}" />
+          <TextBlock Grid.Column="1" Text="{Binding SpeedText}" />
+        </Grid>
+        <TextBlock Text="{Binding TimeLeftText}" FontWeight="SemiBold" />
+      </StackPanel>
+
+      <!-- Unplug and replug before verifying (design §6.2 step 7) -->
+      <Border Classes="notice" IsVisible="{Binding IsReplugging}">
+        <StackPanel Spacing="10">
+          <TextBlock Text="{Binding ReplugText}" FontWeight="SemiBold" TextWrapping="Wrap" />
+          <Button Classes="accent" Content="{x:Static app:Text.EjectNow}" Command="{Binding EjectCommand}" IsVisible="{Binding CanEject}" />
+        </StackPanel>
+      </Border>
+
+      <!-- The watchdog and Stop (design §5.4) -->
+      <Border Classes="notice" IsVisible="{Binding IsSlow}">
+        <TextBlock Text="{x:Static app:Text.Slow}" />
+      </Border>
+      <Border Classes="notice" IsVisible="{Binding IsNotResponding}">
+        <StackPanel Spacing="10">
+          <TextBlock FontWeight="SemiBold"><Run Text="! " /><Run Text="{x:Static app:Text.NotResponding}" /></TextBlock>
+          <StackPanel Orientation="Horizontal" Spacing="8">
+            <Button Content="{x:Static app:Text.KeepWaiting}" Command="{Binding KeepWaitingCommand}" />
+            <Button Content="{x:Static app:Text.Stop}" Command="{Binding StopNowCommand}" />
+          </StackPanel>
+        </StackPanel>
+      </Border>
+      <Border Classes="notice" IsVisible="{Binding ConfirmingStop}">
+        <StackPanel Spacing="10">
+          <TextBlock Text="{Binding StopQuestion}" FontWeight="SemiBold" TextWrapping="Wrap" />
+          <StackPanel Orientation="Horizontal" Spacing="8">
+            <Button Content="{x:Static app:Text.StopNo}" Command="{Binding StopNoCommand}" />
+            <Button Content="{Binding StopYesText}" Command="{Binding StopYesCommand}" />
+          </StackPanel>
+        </StackPanel>
+      </Border>
+      <StackPanel Orientation="Horizontal" Spacing="12" IsVisible="{Binding IsStopping}">
+        <ProgressBar IsIndeterminate="True" Width="120" VerticalAlignment="Center" />
+        <TextBlock Text="{x:Static app:Text.Stopping}" />
+      </StackPanel>
+      <Border Classes="notice" IsVisible="{Binding IsStuck}">
+        <TextBlock Classes="bad" Text="{Binding StuckText, StringFormat='! {0}'}" FontWeight="SemiBold" />
+      </Border>
+      <Button Content="{x:Static app:Text.Stop}" Command="{Binding StopCommand}" IsVisible="{Binding CanStop}" />
+
+      <views:SpeedChart Height="240" IsVisible="{Binding IsRunning}"
+                        WriteSlices="{Binding WriteSlices}" ReadSlices="{Binding ReadSlices}" TotalBytes="{Binding ChartBytes}" />
+
+      <StackPanel Spacing="10" IsVisible="{Binding Error, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+        <TextBlock Classes="bad" Text="{Binding Error}" />
+        <Button Content="{x:Static app:Text.BackToDrives}" Command="{Binding BackCommand}" />
+      </StackPanel>
+    </StackPanel>
+  </ScrollViewer>
+</UserControl>

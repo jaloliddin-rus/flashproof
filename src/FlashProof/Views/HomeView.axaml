@@ -1,0 +1,49 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:app="using:FlashProof"
+             xmlns:vm="using:FlashProof.ViewModels"
+             x:Class="FlashProof.Views.HomeView"
+             x:DataType="vm:HomeViewModel">
+  <ScrollViewer>
+    <StackPanel Classes="page">
+      <Grid ColumnDefinitions="*,Auto">
+        <TextBlock Classes="h1" Text="{x:Static app:Text.HomeTitle}" VerticalAlignment="Center" />
+        <Button Grid.Column="1" Content="{x:Static app:Text.Refresh}" Command="{Binding RefreshCommand}" IsEnabled="{Binding CanRefresh}" />
+      </Grid>
+      <TextBlock Classes="muted" Text="{x:Static app:Text.HomeHint}" />
+
+      <StackPanel Orientation="Horizontal" Spacing="12" IsVisible="{Binding IsScanning}">
+        <ProgressBar IsIndeterminate="True" Width="120" VerticalAlignment="Center" />
+        <TextBlock Text="{x:Static app:Text.Scanning}" />
+      </StackPanel>
+      <TextBlock Text="{x:Static app:Text.NoDrives}" IsVisible="{Binding ShowNoDrives}" />
+      <TextBlock Classes="bad" Text="{Binding Error}" IsVisible="{Binding Error, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+
+      <ItemsControl ItemsSource="{Binding Cards}">
+        <ItemsControl.ItemsPanel>
+          <ItemsPanelTemplate>
+            <StackPanel Spacing="12" />
+          </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+        <ItemsControl.ItemTemplate>
+          <DataTemplate x:DataType="vm:DeviceCard">
+            <Border Classes="card">
+              <Grid ColumnDefinitions="*,Auto">
+                <StackPanel Spacing="4">
+                  <TextBlock Classes="h2" Text="{Binding Name}" />
+                  <TextBlock Classes="muted" Text="{Binding Summary}" IsVisible="{Binding Summary, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                  <TextBlock Text="{Binding Status, StringFormat='● {0}'}" FontWeight="SemiBold" Classes.good="{Binding IsReady}" Classes.bad="{Binding IsNotWorking}" />
+                  <TextBlock Text="{Binding Advice}" IsVisible="{Binding Advice, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                </StackPanel>
+                <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8" VerticalAlignment="Center" Margin="16,0,0,0">
+                  <Button Content="{x:Static app:Text.Inspect}" Command="{Binding InspectCommand}" IsVisible="{Binding CanInspect}" />
+                  <Button Classes="accent" Content="{x:Static app:Text.FullTest}" Command="{Binding TestCommand}" IsVisible="{Binding IsReady}" />
+                </StackPanel>
+              </Grid>
+            </Border>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+    </StackPanel>
+  </ScrollViewer>
+</UserControl>

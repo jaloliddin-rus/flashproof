@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Platform-independent: no Windows or UI references (design §4). -->
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <!-- Sector-aligned I/O buffers (NativeMemory.AlignedAlloc), needed for unbuffered I/O (design §6.2). -->
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- XxHash64 for the record checksum (design §6.1). Pinned; 10.0.14 was published on 25 Oct 2026. -->
+    <PackageReference Include="System.IO.Hashing" Version="10.0.14" />
+  </ItemGroup>
+
+</Project>

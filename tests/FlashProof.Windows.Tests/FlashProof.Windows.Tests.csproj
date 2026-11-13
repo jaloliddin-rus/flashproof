@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Windows-only tests. FlashProof.Tests stays on net10.0 and Core-only (its architecture tests enforce that). -->
+  <PropertyGroup>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="coverlet.collector" Version="6.0.4" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+    <PackageReference Include="xunit" Version="2.9.3" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Xunit" />
+  </ItemGroup>
+
+  <!-- The emulator, shared with FlashProof.Tests, so the worker is tested with simulated drives. -->
+  <ItemGroup>
+    <Compile Include="..\FlashProof.Tests\Emulator\*.cs" LinkBase="Emulator" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\FlashProof.Core\FlashProof.Core.csproj" />
+    <ProjectReference Include="..\..\src\FlashProof.Windows\FlashProof.Windows.csproj" />
+    <!-- The app: its coordinator, and FlashProof.exe itself, which WorkerProcessTests starts as a worker. -->
+    <ProjectReference Include="..\..\src\FlashProof\FlashProof.csproj" />
+  </ItemGroup>
+
+</Project>

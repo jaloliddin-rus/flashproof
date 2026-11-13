@@ -1,0 +1,76 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="FlashProof.App"
+             RequestedThemeVariant="Default">
+  <Application.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.ThemeDictionaries>
+        <ResourceDictionary x:Key="Light">
+          <SolidColorBrush x:Key="CardBrush" Color="#f5f5f3" />
+          <SolidColorBrush x:Key="CardBorderBrush" Color="#e0dfdb" />
+          <SolidColorBrush x:Key="MutedBrush" Color="#52514e" />
+          <SolidColorBrush x:Key="GoodBrush" Color="#0f7b0f" />
+          <SolidColorBrush x:Key="BadBrush" Color="#c42b1c" />
+          <SolidColorBrush x:Key="NoticeBrush" Color="#fff4ce" />
+        </ResourceDictionary>
+        <ResourceDictionary x:Key="Dark">
+          <SolidColorBrush x:Key="CardBrush" Color="#262625" />
+          <SolidColorBrush x:Key="CardBorderBrush" Color="#3a3a38" />
+          <SolidColorBrush x:Key="MutedBrush" Color="#c3c2b7" />
+          <SolidColorBrush x:Key="GoodBrush" Color="#6ccb5f" />
+          <SolidColorBrush x:Key="BadBrush" Color="#ff99a4" />
+          <SolidColorBrush x:Key="NoticeBrush" Color="#433519" />
+        </ResourceDictionary>
+      </ResourceDictionary.ThemeDictionaries>
+    </ResourceDictionary>
+  </Application.Resources>
+
+  <Application.Styles>
+    <FluentTheme />
+    <Style Selector="TextBlock">
+      <Setter Property="TextWrapping" Value="Wrap" />
+      <Setter Property="FontSize" Value="15" />
+      <Setter Property="LineHeight" Value="22" />
+    </Style>
+    <Style Selector="TextBlock.h1">
+      <Setter Property="FontSize" Value="26" />
+      <Setter Property="LineHeight" Value="34" />
+      <Setter Property="FontWeight" Value="SemiBold" />
+    </Style>
+    <Style Selector="TextBlock.h2">
+      <Setter Property="FontSize" Value="18" />
+      <Setter Property="LineHeight" Value="26" />
+      <Setter Property="FontWeight" Value="SemiBold" />
+    </Style>
+    <Style Selector="TextBlock.muted">
+      <Setter Property="Foreground" Value="{DynamicResource MutedBrush}" />
+    </Style>
+    <Style Selector="TextBlock.good">
+      <Setter Property="Foreground" Value="{DynamicResource GoodBrush}" />
+    </Style>
+    <Style Selector="TextBlock.bad">
+      <Setter Property="Foreground" Value="{DynamicResource BadBrush}" />
+    </Style>
+    <Style Selector="Border.card">
+      <Setter Property="Background" Value="{DynamicResource CardBrush}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource CardBorderBrush}" />
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="CornerRadius" Value="8" />
+      <Setter Property="Padding" Value="20,16" />
+    </Style>
+    <Style Selector="Border.notice">
+      <Setter Property="Background" Value="{DynamicResource NoticeBrush}" />
+      <Setter Property="CornerRadius" Value="8" />
+      <Setter Property="Padding" Value="16,12" />
+    </Style>
+    <Style Selector="Button">
+      <Setter Property="Padding" Value="16,8" />
+      <Setter Property="FontSize" Value="15" />
+    </Style>
+    <Style Selector="StackPanel.page">
+      <Setter Property="Margin" Value="32,24,32,32" />
+      <Setter Property="MaxWidth" Value="780" />
+      <Setter Property="Spacing" Value="16" />
+    </Style>
+  </Application.Styles>
+</Application>

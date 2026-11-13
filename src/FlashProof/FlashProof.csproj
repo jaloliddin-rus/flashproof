@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <!-- Bindings are checked when building, so a misspelt property fails the build instead of showing nothing. -->
+    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+    <Version>1.0.0</Version>
+    <!-- Drawn by tools/make-icon.cs. -->
+    <ApplicationIcon>Assets\FlashProof.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AvaloniaResource Include="Assets\FlashProof.ico" />
+  </ItemGroup>
+
+  <!-- The release build (design §9): one self-contained exe per platform, with nothing to install. publish.ps1 makes both.
+       Compression halves the download (x64: 97.7 → 46.6 MB) and didn't slow the worker's start (about 0.25 s warm). -->
+  <PropertyGroup Condition="'$(RuntimeIdentifier)' != ''">
+    <SelfContained>true</SelfContained>
+    <PublishSingleFile>true</PublishSingleFile>
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="12.1.4" />
+    <PackageReference Include="Avalonia.Desktop" Version="12.1.4" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="12.1.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FlashProof.Core\FlashProof.Core.csproj" />
+    <ProjectReference Include="..\FlashProof.Windows\FlashProof.Windows.csproj" />
+  </ItemGroup>
+
+</Project>

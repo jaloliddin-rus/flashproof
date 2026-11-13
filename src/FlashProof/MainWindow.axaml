@@ -1,0 +1,19 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:app="using:FlashProof"
+        xmlns:vm="using:FlashProof.ViewModels"
+        xmlns:views="using:FlashProof.Views"
+        x:Class="FlashProof.MainWindow"
+        x:DataType="vm:MainViewModel"
+        Title="{x:Static app:Text.AppName}"
+        Icon="/Assets/FlashProof.ico"
+        Width="900" Height="700" MinWidth="560" MinHeight="480">
+  <Window.DataTemplates>
+    <DataTemplate DataType="vm:HomeViewModel"><views:HomeView /></DataTemplate>
+    <DataTemplate DataType="vm:InspectViewModel"><views:InspectView /></DataTemplate>
+    <DataTemplate DataType="vm:ConfirmViewModel"><views:ConfirmView /></DataTemplate>
+    <DataTemplate DataType="vm:TestViewModel"><views:TestView /></DataTemplate>
+    <DataTemplate DataType="vm:ResultViewModel"><views:ResultView /></DataTemplate>
+  </Window.DataTemplates>
+  <ContentControl Content="{Binding Current}" />
+</Window>

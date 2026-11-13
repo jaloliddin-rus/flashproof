@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/FlashProof.Core/FlashProof.Core.csproj" />
+    <Project Path="src/FlashProof.Windows/FlashProof.Windows.csproj" />
+    <Project Path="src/FlashProof/FlashProof.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/FlashProof.Tests/FlashProof.Tests.csproj" />
+    <Project Path="tests/FlashProof.Windows.Tests/FlashProof.Windows.Tests.csproj" />
+  </Folder>
+</Solution>

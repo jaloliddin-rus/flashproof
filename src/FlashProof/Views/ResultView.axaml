@@ -1,0 +1,72 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:app="using:FlashProof"
+             xmlns:vm="using:FlashProof.ViewModels"
+             xmlns:views="using:FlashProof.Views"
+             x:Class="FlashProof.Views.ResultView"
+             x:DataType="vm:ResultViewModel">
+  <ScrollViewer>
+    <StackPanel Classes="page">
+      <TextBlock Classes="muted" Text="{Binding Name}" />
+
+      <!-- "Did you unplug it?" comes before the verdict (design §3) -->
+      <Border Classes="notice" IsVisible="{Binding AskIfUnplugged}">
+        <StackPanel Spacing="10">
+          <TextBlock Classes="h2" Text="{x:Static app:Text.DidYouUnplugIt}" />
+          <StackPanel Orientation="Horizontal" Spacing="8">
+            <Button Content="{x:Static app:Text.Yes}" Command="{Binding YesUnpluggedCommand}" />
+            <Button Content="{x:Static app:Text.No}" Command="{Binding NoUnpluggedCommand}" />
+          </StackPanel>
+        </StackPanel>
+      </Border>
+
+      <StackPanel Spacing="16" IsVisible="{Binding ShowVerdict}">
+        <StackPanel Spacing="6">
+          <TextBlock Classes="h1" Classes.good="{Binding IsGood}" Classes.bad="{Binding IsBad}" Text="{Binding Heading}" />
+          <TextBlock Text="{Binding Explanation}" FontSize="16" />
+        </StackPanel>
+
+        <Border Classes="card" IsVisible="{Binding HasDetails}">
+          <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto" ColumnSpacing="16" RowSpacing="8">
+            <TextBlock FontWeight="SemiBold" Text="{x:Static app:Text.StorageLabel}" />
+            <TextBlock Grid.Column="1" Text="{Binding Storage}" />
+            <TextBlock Grid.Row="1" FontWeight="SemiBold" Text="{x:Static app:Text.CapacityLabel}" />
+            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Capacity}" />
+          </Grid>
+        </Border>
+
+        <StackPanel Spacing="6" IsVisible="{Binding HasDetails}">
+          <TextBlock Text="{Binding Size}" FontWeight="SemiBold" />
+          <TextBlock Classes="muted" FontSize="13" Text="{x:Static app:Text.UnitsExplained}" />
+          <TextBlock Text="{Binding Tested, StringFormat='Tested: {0}'}" />
+          <TextBlock Text="{Binding Took}" />
+          <TextBlock Text="{Binding Replugged}" IsVisible="{Binding Replugged, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+          <TextBlock Classes="h2" Text="{x:Static app:Text.SpeedLabel}" Margin="0,8,0,0" />
+          <TextBlock Text="{Binding WriteSpeeds}" />
+          <TextBlock Text="{Binding ReadSpeeds}" />
+          <TextBlock Classes="muted" Text="{Binding Usb2Note}" IsVisible="{Binding Usb2Note, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+          <views:SpeedChart Height="240" Margin="0,8,0,0" IsVisible="{Binding HasChart}"
+                            WriteSlices="{Binding WriteSlices}" ReadSlices="{Binding ReadSlices}" TotalBytes="{Binding ChartBytes}" />
+        </StackPanel>
+
+        <Border Classes="notice" IsVisible="{Binding FilesKept, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+          <TextBlock Text="{Binding FilesKept}" />
+        </Border>
+
+        <!-- Export (design §9): serials hidden unless asked for -->
+        <StackPanel Spacing="8">
+          <CheckBox IsChecked="{Binding IncludeSerials}">
+            <TextBlock Text="{x:Static app:Text.IncludeSerials}" />
+          </CheckBox>
+          <StackPanel Orientation="Horizontal" Spacing="8">
+            <Button Content="{x:Static app:Text.CopyReport}" Command="{Binding CopyCommand}" />
+            <Button Content="{x:Static app:Text.SaveReport}" Command="{Binding SaveCommand}" />
+            <TextBlock Classes="muted" Text="{Binding ExportMessage}" VerticalAlignment="Center" />
+          </StackPanel>
+        </StackPanel>
+      </StackPanel>
+
+      <Button Content="{x:Static app:Text.BackToDrives}" Command="{Binding BackCommand}" Margin="0,8,0,0" />
+    </StackPanel>
+  </ScrollViewer>
+</UserControl>
